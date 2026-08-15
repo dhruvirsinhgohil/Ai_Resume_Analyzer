@@ -360,10 +360,20 @@
 }
 
 @media (max-width: 700px) {
+  .form-container {
+    padding: 18px 16px;
+  }
+
+  .form-section {
+    padding: 16px 12px 6px;
+    border-radius: 14px;
+  }
+
   .section-title-row {
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
+    gap: 8px;
   }
 
   .form-grid {
@@ -373,5 +383,58 @@
   .item-header {
     flex-direction: column;
     gap: 6px;
+  }
+
+  .form-section input,
+  .form-section textarea {
+    font-size: 0.98rem;
+    padding: 10px 12px;
+  }
+
+  .skill-input {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .skill-input input {
+    width: 100%;
+  }
+
+  .skill-input button {
+    width: 100%;
+    min-width: auto;
+  }
+
+  .skills-list {
+    gap: 8px;
+  }
+
+  .project-card {
+    padding: 14px;
+  }
+
+  .project-card-header {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .project-card-actions {
+    gap: 8px;
+  }
+
+  .project-card input,
+  .project-card textarea {
+    margin-top: 8px;
+  }
+
+  .save-resume-btn {
+    padding: 12px;
+    font-size: 1rem;
+  }
+
+  .download-btn {
+    width: 100%;
   }
 }

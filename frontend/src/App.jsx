@@ -2,6 +2,7 @@ import {
   BrowserRouter,
   Routes,
   Route,
+  Navigate,
 } from "react-router-dom";
 
 import Home from "./pages/Home";
@@ -12,46 +13,91 @@ import Dashboard from "./components/dashboard/Dashboard";
 import CreateResume from "./pages/CreateResume";
 import ResumeScore from "./components/resume/ResumeScore";
 import EditResume from "./pages/EditResume";
+
 function App() {
+  const isAuthenticated = Boolean(
+    typeof window !== "undefined" &&
+      localStorage.getItem("token")
+  );
+
   return (
     <BrowserRouter>
-
       <Routes>
-
         <Route
           path="/"
-          element={<Home />}
+          element={
+            isAuthenticated ? (
+              <Navigate to="/dashboard" replace />
+            ) : (
+              <Home />
+            )
+          }
         />
 
         <Route
           path="/login"
-          element={<Login />}
+          element={
+            isAuthenticated ? (
+              <Navigate to="/dashboard" replace />
+            ) : (
+              <Login />
+            )
+          }
         />
 
         <Route
           path="/register"
-          element={<Register />}
+          element={
+            isAuthenticated ? (
+              <Navigate to="/dashboard" replace />
+            ) : (
+              <Register />
+            )
+          }
         />
 
         <Route
           path="/dashboard"
-          element={<Dashboard />}
+          element={
+            isAuthenticated ? (
+              <Dashboard />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
         />
 
         <Route
           path="/resume/create"
-          element={<CreateResume />}
+          element={
+            isAuthenticated ? (
+              <CreateResume />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
         />
         <Route
           path="/resume/score/:resumeId"
-          element={<ResumeScore />}
+          element={
+            isAuthenticated ? (
+              <ResumeScore />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
         />
         <Route
           path="/resume/edit/:resumeId"
-          element={<EditResume />}
+          element={
+            isAuthenticated ? (
+              <EditResume />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
         />
       </Routes>
-
     </BrowserRouter>
   );
 }

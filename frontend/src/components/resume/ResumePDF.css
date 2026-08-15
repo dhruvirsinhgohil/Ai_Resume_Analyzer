@@ -1,0 +1,112 @@
+.resume-pdf {
+  width: 210mm;
+
+  min-height: 297mm;
+
+  padding: 18mm;
+
+  background: white;
+
+  color: #222;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  box-sizing: border-box;
+}
+
+.pdf-header {
+  text-align: center;
+
+  border-bottom: 2px solid #222;
+
+  padding-bottom: 15px;
+
+  margin-bottom: 20px;
+}
+
+.pdf-header h1 {
+  margin: 0 0 10px;
+
+  font-size: 30px;
+
+  text-transform: uppercase;
+}
+
+.contact-info,
+.links {
+  display: flex;
+
+  justify-content: center;
+
+  gap: 12px;
+
+  flex-wrap: wrap;
+
+  font-size: 12px;
+}
+
+.links {
+  margin-top: 5px;
+}
+
+.resume-pdf section {
+  margin-bottom: 20px;
+}
+
+.resume-pdf section h2 {
+  font-size: 15px;
+
+  border-bottom: 1px solid #444;
+
+  padding-bottom: 5px;
+
+  margin-bottom: 10px;
+}
+
+.resume-pdf p {
+  font-size: 12px;
+
+  line-height: 1.5;
+
+  margin: 5px 0;
+}
+
+.resume-item {
+  margin-bottom: 14px;
+}
+
+.item-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  gap: 15px;
+}
+
+.company {
+  font-weight: bold;
+}
+
+.technologies {
+  font-size: 11px !important;
+
+  font-style: italic;
+}
+
+@media print {
+
+  body {
+    margin: 0;
+  }
+
+  .resume-pdf {
+    width: 210mm;
+
+    min-height: 297mm;
+
+    box-shadow: none;
+  }
+}

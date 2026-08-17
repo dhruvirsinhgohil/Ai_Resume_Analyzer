@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../../services/api";
 import "../../styles/auth.css";
+import { useAuth } from "../../context/AuthContext";
 
 function Login() {
   const navigate = useNavigate();
@@ -35,11 +36,17 @@ function Login() {
         return;
       }
 
-      localStorage.setItem("token", result.token);
-      localStorage.setItem(
-        "user",
-        JSON.stringify(result.user)
-      );
+      const { login } = useAuth();
+
+      // Persist login using context (which also writes to localStorage)
+      if (login) {
+        login(result.user, result.token);
+      } else {
+        try {
+          localStorage.setItem("token", result.token);
+          localStorage.setItem("user", JSON.stringify(result.user));
+        } catch (e) {}
+      }
 
       navigate("/dashboard");
     } catch (error) {

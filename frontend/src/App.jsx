@@ -1,9 +1,5 @@
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useAuth } from "./context/AuthContext";
 
 import Home from "./pages/Home";
 
@@ -15,13 +11,9 @@ import ResumeScore from "./components/resume/ResumeScore";
 import EditResume from "./pages/EditResume";
 
 function App() {
-  const isAuthenticated = Boolean(
-    typeof window !== "undefined" &&
-      localStorage.getItem("token")
-  );
+  const { isAuthenticated } = useAuth();
 
   return (
-    <BrowserRouter>
       <Routes>
         <Route
           path="/"
@@ -98,7 +90,6 @@ function App() {
           }
         />
       </Routes>
-    </BrowserRouter>
   );
 }
 

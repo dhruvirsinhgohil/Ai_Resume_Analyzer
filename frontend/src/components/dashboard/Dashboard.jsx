@@ -6,27 +6,16 @@ import {
     deleteResume,
 } from "../../services/api";
 import "../../styles/dashboard.css";
+import { useAuth } from "../../context/AuthContext";
 
 function Dashboard() {
     const navigate = useNavigate();
+    const { user, logout } = useAuth();
 
     const [resumes, setResumes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [analyzing, setAnalyzing] = useState(null);
     const [error, setError] = useState("");
-
-    const getStoredUser = () => {
-        try {
-            const storedUser = localStorage.getItem("user");
-            return storedUser ? JSON.parse(storedUser) : null;
-        } catch (error) {
-            console.error("Invalid stored user data:", error);
-            localStorage.removeItem("user");
-            return null;
-        }
-    };
-
-    const user = getStoredUser();
 
     useEffect(() => {
         loadResumes();
@@ -79,10 +68,15 @@ function Dashboard() {
     };
 
     const handleLogout = () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-
-        navigate("/login");
+        if (logout) {
+            logout();
+        } else {
+            try {
+                localStorage.removeItem("token");
+                localStorage.removeItem("user");
+            } catch (e) {}
+            navigate("/login");
+        }
     };
 
     if (loading) {

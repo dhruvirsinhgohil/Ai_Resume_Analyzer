@@ -50,7 +50,8 @@ function Login() {
 
       navigate("/dashboard");
     } catch (error) {
-      setError("Something went wrong");
+      console.error("Login error:", error);
+      setError(error?.message || "Something went wrong");
     } finally {
       setLoading(false);
     }

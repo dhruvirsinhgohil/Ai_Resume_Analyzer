@@ -13,15 +13,39 @@ export const registerUser = async (userData) => {
 };
 
 export const loginUser = async (loginData) => {
-  const response = await fetch(`${API_URL}/auth/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(loginData),
-  });
+  try {
+    const response = await fetch(`${API_URL}/auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(loginData),
+    });
 
-  return response.json();
+    let data;
+    try {
+      data = await response.json();
+    } catch (e) {
+      // response is not JSON
+      data = null;
+    }
+
+    if (!response.ok) {
+      return {
+        success: false,
+        message:
+          (data && (data.message || data.error)) ||
+          `Request failed with status ${response.status}`,
+      };
+    }
+
+    return data;
+  } catch (err) {
+    return {
+      success: false,
+      message: err.message || "Network error",
+    };
+  }
 };
 
 export const getToken = () => {

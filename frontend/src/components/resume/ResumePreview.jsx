@@ -54,6 +54,14 @@ function ResumePreview({ resume }) {
       {/* Header */}
       <div className="preview-header">
 
+        {resume.personalInfo?.photo && (
+          <img
+            src={resume.personalInfo.photo}
+            alt="Profile"
+            className="avatar"
+          />
+        )}
+
         <h1>
           {resume.personalInfo.fullName ||
             "Your Name"}

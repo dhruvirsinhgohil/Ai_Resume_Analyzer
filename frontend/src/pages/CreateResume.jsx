@@ -549,7 +549,7 @@ function CreateResume() {
                     handlePersonalChange
                   }
                 />
-
+ 
                 <input
                   type="text"
                   name="github"
@@ -562,6 +562,56 @@ function CreateResume() {
                     handlePersonalChange
                   }
                 />
+
+                <div className="photo-input">
+                  <label className="photo-label">Profile Photo</label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (!file) return;
+
+                      const reader = new FileReader();
+                      reader.onload = () => {
+                        setResume({
+                          ...resume,
+                          personalInfo: {
+                            ...resume.personalInfo,
+                            photo: reader.result,
+                          },
+                        });
+                      };
+                      reader.readAsDataURL(file);
+                    }}
+                  />
+
+                  {resume.personalInfo?.photo && (
+                    <div className="photo-preview">
+                      <img
+                        src={resume.personalInfo.photo}
+                        alt="Profile"
+                        className="avatar-input"
+                      />
+
+                      <button
+                        type="button"
+                        className="remove-button"
+                        onClick={() =>
+                          setResume({
+                            ...resume,
+                            personalInfo: {
+                              ...resume.personalInfo,
+                              photo: "",
+                            },
+                          })
+                        }
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  )}
+                </div>
 
               </div>
 

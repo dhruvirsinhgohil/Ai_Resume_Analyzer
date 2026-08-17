@@ -122,6 +122,32 @@ function EditResume() {
     });
   };
 
+  const handlePhotoChange = (file) => {
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      setResume({
+        ...resume,
+        personalInfo: {
+          ...resume.personalInfo,
+          photo: reader.result,
+        },
+      });
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const removePhoto = () => {
+    setResume({
+      ...resume,
+      personalInfo: {
+        ...resume.personalInfo,
+        photo: "",
+      },
+    });
+  };
+
   // =====================================
   // SUMMARY
   // =====================================
@@ -698,6 +724,33 @@ function EditResume() {
                     handlePersonalChange
                   }
                 />
+
+                <div className="photo-input">
+                  <label className="photo-label">Profile Photo</label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handlePhotoChange(e.target.files?.[0])}
+                  />
+
+                  {resume.personalInfo?.photo && (
+                    <div className="photo-preview">
+                      <img
+                        src={resume.personalInfo.photo}
+                        alt="Profile"
+                        className="avatar-input"
+                      />
+
+                      <button
+                        type="button"
+                        className="remove-button"
+                        onClick={removePhoto}
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  )}
+                </div>
 
               </div>
 

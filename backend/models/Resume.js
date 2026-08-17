@@ -32,6 +32,9 @@ const resumeSchema = new mongoose.Schema(
       portfolio: {
         type: String,
       },
+      photo: {
+        type: String,
+      },
     },
 
     summary: {

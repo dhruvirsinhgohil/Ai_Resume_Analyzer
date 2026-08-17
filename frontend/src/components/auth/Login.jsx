@@ -22,6 +22,8 @@ function Login() {
     });
   };
 
+  const { login: authLogin } = useAuth();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -36,11 +38,9 @@ function Login() {
         return;
       }
 
-      const { login } = useAuth();
-
       // Persist login using context (which also writes to localStorage)
-      if (login) {
-        login(result.user, result.token);
+      if (authLogin) {
+        authLogin(result.user, result.token);
       } else {
         try {
           localStorage.setItem("token", result.token);

@@ -39,15 +39,15 @@ function ResumePDF({ resume }) {
         <div className="links">
 
           {personal.linkedin && (
-            <span>
-              {personal.linkedin}
-            </span>
+            <a href={personal.linkedin} target="_blank" rel="noreferrer">
+              LinkedIn
+            </a>
           )}
 
           {personal.github && (
-            <span>
-              {personal.github}
-            </span>
+            <a href={personal.github} target="_blank" rel="noreferrer">
+              GitHub
+            </a>
           )}
 
         </div>

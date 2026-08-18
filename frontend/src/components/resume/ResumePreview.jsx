@@ -1,42 +1,57 @@
-import html2canvas from "html2canvas";
-import { jsPDF } from "jspdf";
-
 function ResumePreview({ resume }) {
   const downloadPdf = async () => {
     try {
       const element = document.getElementById("resume-preview");
       if (!element) return;
 
-      const canvas = await html2canvas(element, {
-        scale: 2,
-        useCORS: true,
-        logging: false,
-      });
-
-      const imgData = canvas.toDataURL("image/png");
-
-      const pdf = new jsPDF("p", "pt", "a4");
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-
-      // If content is longer than one page, split into pages
-      let position = 0;
-      pdf.addImage(imgData, "PNG", 0, position, pdfWidth, pdfHeight);
-
-      // If content height exceeds a single page, add more pages
-      const pageHeight = pdf.internal.pageSize.getHeight();
-      if (pdfHeight > pageHeight) {
-        let remainingHeight = pdfHeight - pageHeight;
-        while (remainingHeight > 0) {
-          position = -(pageHeight * (Math.ceil((pdfHeight - remainingHeight) / pageHeight)));
-          pdf.addPage();
-          pdf.addImage(imgData, "PNG", 0, position, pdfWidth, pdfHeight);
-          remainingHeight -= pageHeight;
-        }
+      // Open a new window and write the resume HTML into it with styles preserved
+      const printWindow = window.open("", "_blank");
+      if (!printWindow) {
+        alert("Popup blocked. Please allow popups for this site to download the PDF.");
+        return;
       }
 
-      const fileName = `${(resume?.personalInfo?.fullName || "resume").replace(/\s+/g, "_")}.pdf`;
-      pdf.save(fileName);
+      // Clone the element and remove UI controls that shouldn't appear in the printed PDF
+      const clone = element.cloneNode(true);
+      clone.querySelectorAll('.download-btn').forEach((el) => el.remove());
+
+      // Collect existing stylesheet links and inline styles to preserve styles in the print window
+      const styles = Array.from(document.querySelectorAll('link[rel="stylesheet"], style'))
+        .map((n) => n.outerHTML)
+        .join('\n');
+
+      // Add a small print-specific style to force A4 sizing and margins and hide any leftover UI
+      const printStyle = `
+        <style>
+          @page { size: A4; margin: 18mm; }
+          body { margin: 0; font-family: Arial, Helvetica, sans-serif; }
+          .resume-preview, .resume-pdf { width: 210mm; min-height: 297mm; box-sizing: border-box; }
+          .download-btn { display: none !important; }
+        </style>
+      `;
+
+      printWindow.document.write(`
+        <html>
+          <head>
+            <title>Resume</title>
+            ${styles}
+            ${printStyle}
+          </head>
+          <body>
+            ${clone.outerHTML}
+          </body>
+        </html>
+      `);
+
+      printWindow.document.close();
+      printWindow.focus();
+
+      // Give the new window some time to load styles, then trigger print dialog
+      setTimeout(() => {
+        printWindow.print();
+        // Optionally close the window after printing (commented out to let user save manually)
+        // printWindow.close();
+      }, 500);
     } catch (err) {
       console.error("PDF download failed:", err);
       alert("Unable to generate PDF");

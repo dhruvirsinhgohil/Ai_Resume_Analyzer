@@ -4,7 +4,7 @@ import {
     getResumes,
     analyzeResume,
     deleteResume,
-} from "../../services/api";
+} from "../../services/api_new";
 import "../../styles/dashboard.css";
 import { useAuth } from "../../context/AuthContext";
 

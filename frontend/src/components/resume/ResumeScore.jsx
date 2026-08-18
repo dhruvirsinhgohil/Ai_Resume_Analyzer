@@ -4,7 +4,7 @@ import ResumePDF from "./ResumePDF";
 import {
   getAIAnalysis,
   analyzeResume,
-} from "../../services/api";
+} from "../../services/api_new";
 import "../../styles/score.css";
 
 function ResumeScore() {

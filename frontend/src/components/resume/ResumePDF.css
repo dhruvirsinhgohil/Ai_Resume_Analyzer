@@ -52,6 +52,49 @@
   margin-top: 5px;
 }
 
+.links a, .preview-links a {
+  color: inherit;
+  text-decoration: underline;
+  word-break: break-word;
+}
+
+/* Make resume PDF container responsive on screens while keeping A4 for print */
+.resume-pdf {
+  max-width: 100%;
+  width: auto;
+  padding: clamp(12px, 2.5vw, 18mm);
+  font-size: 14px;
+}
+
+.resume-pdf h1 { font-size: clamp(1.4rem, 3.2vw, 2rem); }
+.resume-pdf p { font-size: clamp(0.9rem, 1.6vw, 1rem); }
+
+@media (max-width: 900px) {
+  .resume-pdf {
+    padding: 16px;
+  }
+
+  .item-header {
+    flex-direction: column;
+    gap: 6px;
+  }
+}
+
+/* Print rules to preserve A4 sizing and avoid broken sections */
+@media print {
+  .resume-pdf {
+    width: 210mm;
+    min-height: 297mm;
+    padding: 18mm;
+  }
+
+  .resume-pdf section, .resume-item, .preview-section {
+    page-break-inside: avoid;
+  }
+
+  a { color: #0000EE; text-decoration: underline; }
+}
+
 .resume-pdf section {
   margin-bottom: 20px;
 }

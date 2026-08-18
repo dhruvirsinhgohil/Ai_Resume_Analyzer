@@ -238,26 +238,29 @@
 .resume-preview {
   background: white;
   width: 100%;
-  min-height: 1100px;
-  border-radius: 26px;
+  max-width: 900px;
+  min-height: 800px;
+  border-radius: 18px;
   border: 1px solid rgba(148, 163, 184, 0.18);
-  padding: 40px 30px;
+  padding: clamp(16px, 3vw, 40px);
   box-shadow: 0 18px 42px rgba(15, 23, 42, 0.08);
   color: #0f172a;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
+  margin: 0 auto;
 }
 
 .preview-header {
   text-align: center;
   border-bottom: 2px solid rgba(15, 23, 42, 0.8);
-  padding-bottom: 20px;
-  margin-bottom: 24px;
+  padding-bottom: 16px;
+  margin-bottom: 20px;
   position: relative;
 }
 
 .avatar {
-  width: 96px;
-  height: 96px;
+  width: clamp(64px, 10vw, 120px);
+  height: clamp(64px, 10vw, 120px);
   border-radius: 50%;
   object-fit: cover;
   display: block;
@@ -292,7 +295,7 @@
 
 .preview-header h1 {
   margin: 0 0 10px;
-  font-size: clamp(2rem, 2vw, 2.5rem);
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
@@ -313,8 +316,42 @@
 .preview-links a {
   color: #4f46e5;
   font-weight: 700;
+  word-break: break-word;
 }
 
+/* Make content sections avoid breaking across pages when printing */
+.preview-section, .resume-item {
+  page-break-inside: avoid;
+}
+
+@media (max-width: 700px) {
+  .resume-preview {
+    min-height: auto;
+    padding: 16px;
+  }
+
+  .preview-header h1 {
+    font-size: clamp(1.2rem, 6vw, 1.8rem);
+  }
+
+  .avatar {
+    margin-bottom: 8px;
+  }
+
+  .item-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .preview-skills span {
+    font-size: 0.75rem;
+  }
+
+  .download-btn {
+    width: 100%;
+  }
+}
 .preview-section {
   margin-bottom: 24px;
 }
